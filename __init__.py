@@ -2,13 +2,16 @@ from matplotlib import pyplot as plt
 import numpy as np
 import sys,os
 
-def collector(image_list,cmap='gray',interpolation='none'):
+def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True):
     global xclicks,yclicks,indices,subplot_axes,points
     xclicks = []
     yclicks = []
     indices = []
     subplot_axes = []
     points = [[]]*len(image_list)
+
+    if len(titles)!=len(image_list):
+        titles = ['%02d'%k for k in range(len(image_list))]
     
     nrows = int(np.floor(np.sqrt(len(image_list))))
     ncols = int(np.ceil(np.sqrt(len(image_list))))
@@ -50,11 +53,8 @@ def collector(image_list,cmap='gray',interpolation='none'):
 
         subplot_index = subplot_axes.index(event.inaxes)
         
-        indices.append(subplot_index+1)
-        print 'appending'
-        print subplot_index
+        indices.append(subplot_index)
         points[subplot_index].append((xnewclick,ynewclick))
-        print points
         
         plt.sca(event.inaxes)
         plt.plot(xnewclick,ynewclick,'go',markersize=10)
@@ -66,9 +66,13 @@ def collector(image_list,cmap='gray',interpolation='none'):
     for idx,im in enumerate(image_list):
         plt.subplot(nrows,ncols,idx+1)
         plt.imshow(im,cmap=cmap,interpolation=interpolation)
+        plt.title(titles[idx])
         plt.autoscale(False)
         subplot_axes.append(plt.gca())
         
     plt.show()
+    if print_code:
+        printclicks()
+        
     return xclicks,yclicks,indices
 
