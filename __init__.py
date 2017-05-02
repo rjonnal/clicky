@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import sys,os
 
-def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True):
+def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-'):
     global xclicks,yclicks,indices,subplot_axes,points
     xclicks = []
     yclicks = []
@@ -66,7 +66,10 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
 
     for idx,im in enumerate(image_list):
         plt.subplot(nrows,ncols,idx+1)
-        plt.imshow(im,cmap=cmap,interpolation=interpolation)
+        if type(im)==tuple:
+            plt.plot(im[0],im[1],plot_marker)
+        else:
+            plt.imshow(im,cmap=cmap,interpolation=interpolation)
         plt.title(titles[idx])
         plt.autoscale(False)
         subplot_axes.append(plt.gca())
