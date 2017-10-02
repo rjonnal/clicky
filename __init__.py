@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import sys,os
 
-def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-',show_individual=True):
+def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-'):
     global xclicks,yclicks,indices,subplot_axes,points
     xclicks = []
     yclicks = []
@@ -68,7 +68,7 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
         points[subplot_index].append((xnewclick,ynewclick))
         
         plt.sca(event.inaxes)
-        plt.plot(xnewclick,ynewclick,'go',markersize=10)
+        plt.plot(xnewclick,ynewclick,'go',markersize=markersize)
         plt.draw()
         #printclicks()
 
