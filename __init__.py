@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import sys,os
 
-def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-'):
+def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-',show_individual=True):
     global xclicks,yclicks,indices,subplot_axes,points
     xclicks = []
     yclicks = []
@@ -16,6 +16,16 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
     
     nrows = int(np.floor(np.sqrt(len(image_list))))
     ncols = int(np.ceil(np.sqrt(len(image_list))))
+
+    for idx,im in enumerate(image_list):
+        plt.figure()
+        plt.axes([0,0,1,1])
+        plt.imshow(im,cmap=cmap,interpolation=interpolation)
+        plt.grid(True)
+        
+
+
+    
     fig = plt.figure()
 
     def printclicks():
@@ -61,7 +71,7 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
         plt.plot(xnewclick,ynewclick,'go',markersize=10)
         plt.draw()
         #printclicks()
-        
+
     cid = fig.canvas.mpl_connect('button_press_event',onclick)
 
     for idx,im in enumerate(image_list):
