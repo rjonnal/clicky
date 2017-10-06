@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import sys,os
 
-def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-',markersize=6):
+def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=True,plot_marker='k-',markersize=6,clim_percentile=(0,100)):
     global xclicks,yclicks,indices,subplot_axes,points
     xclicks = []
     yclicks = []
@@ -18,9 +18,10 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
     ncols = int(np.ceil(np.sqrt(len(image_list))))
 
     for idx,im in enumerate(image_list):
+        clim = np.percentile(im,clim_percentile)
         plt.figure()
         plt.axes([0,0,1,1])
-        plt.imshow(im,cmap=cmap,interpolation=interpolation)
+        plt.imshow(im,cmap=cmap,interpolation=interpolation,clim=clim)
         plt.grid(True)
         
 
@@ -75,11 +76,13 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
     cid = fig.canvas.mpl_connect('button_press_event',onclick)
 
     for idx,im in enumerate(image_list):
+        clim = np.percentile(im,clim_percentile)
         plt.subplot(nrows,ncols,idx+1)
         if type(im)==tuple:
             plt.plot(im[0],im[1],plot_marker)
         else:
-            plt.imshow(im,cmap=cmap,interpolation=interpolation)
+            plt.imshow(im,cmap=cmap,interpolation=interpolation,clim=clim)
+            plt.grid(True)
         plt.title(titles[idx])
         plt.autoscale(False)
         subplot_axes.append(plt.gca())
