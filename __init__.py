@@ -10,7 +10,6 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
     subplot_axes = []
     points = [[]]*len(image_list)
 
-    print len(titles),len(image_list)
     if len(titles)!=len(image_list):
         titles = ['%02d'%k for k in range(len(image_list))]
     
@@ -24,9 +23,6 @@ def collector(image_list,cmap='gray',interpolation='none',titles=[],print_code=T
         plt.imshow(im,cmap=cmap,interpolation=interpolation,clim=clim)
         plt.grid(True)
         
-
-
-    
     fig = plt.figure()
 
     def printclicks():
